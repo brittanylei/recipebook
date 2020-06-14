@@ -6,6 +6,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Recipe(models.Model):
     name = models.CharField(max_length=100)
@@ -15,9 +18,15 @@ class Recipe(models.Model):
     image_url = models.CharField(max_length=255)
     recipe_ref = models.CharField(max_length=255, blank=True, default='')
 
+    def __str__(self):
+        return self.name
+
 
 class Unit(models.Model):
-    measure = models.CharField(max_length=10, unique=True)
+    measure = models.CharField(max_length=10, unique=True, blank=True)
+
+    def __str__(self):
+        return self.measure
 
 
 class Ingredient(models.Model):
@@ -25,8 +34,14 @@ class Ingredient(models.Model):
     amount = models.FloatField()
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Direction(models.Model):
     step = models.IntegerField()
     description = models.CharField(max_length=100)
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.step + self.description
