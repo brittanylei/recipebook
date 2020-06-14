@@ -2,13 +2,14 @@
 
 {% block content %}
 <h1>Recipes</h1>
+<button type="button" class="btn btn-primary">Add</button>
 <div class="row">
     {% for recipe in recipes %}
     <div class="col">
         <div class="card" style="width: 18rem;">
             <img src="{{ recipe.image_url }}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">{{ recipe.name }}</h5>
+                <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></h5>
                 <p class="card-text">Time needed: {{ recipe.time_needed }} minutes</p>
 <!--                <a href="#" class="btn btn-primary">Add to cart</a>-->
             </div>

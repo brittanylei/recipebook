@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ recipe.name }}</h1>
+
+<div class="row">
+    {% if recipe.recipe_ref %}
+        Reference: {{ recipe.recipe_ref }} <br>
+    {% endif %}
+    Ingredients: <br>
+    {% for ingredient in recipe.ingredients.all %}
+        {{ ingredient.amount }}
+        {% for unit in ingredient.unit_set.all %}
+            {{ unit.measure }} fix this :(
+        {% endfor %}
+        {{ ingredient.name }}
+    <br>
+    {% endfor %}
+    <br>
+
+    Directions: <br>
+    {% for direction in recipe.direction_set.all %}
+        {{ direction.step }}. {{ direction.description }} <br>
+    {% endfor %}
+</div>
+
+{% endblock %}
