@@ -26,9 +26,7 @@ def add_recipe(request):
     form = RecipeForm(request.POST or None)
     if form.is_valid():
         form.save()
-
     context = {'form': form}
-
     return render(request, 'addRecipe.html', context)
 
 
@@ -43,5 +41,9 @@ def delete_recipe(request, recipe_id):
 
 def edit_recipe(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
-    context = {'recipe': recipe}
+    form = RecipeForm(request.POST or None, instance=recipe)
+    if form.is_valid():
+        form.save()
+        return redirect("../")
+    context = {'recipe': recipe, 'form':  form}
     return render(request, 'editRecipe.html', context)

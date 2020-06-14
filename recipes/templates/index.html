@@ -1,27 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Recipes</h1>
-<button type="button" class="btn btn-primary">
-    <a href = "/recipes/addRecipe/"> Add </a>
-</button>
+<h1>Recipes
+    <button type="button" class="btn btn-primary">
+        <a href = "/recipes/addRecipe/" style="color:#FDFEFE;"> Add </a>
+    </button>
+</h1>
+<br>
 <div class="row">
     {% for recipe in recipes %}
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img src="{{ recipe.image_url }}" class="card-img-top" alt="...">
+    <div class="col-md-4">
+        <div class="card" style="width: 20rem; height: 20rem;">
+            <img src="{{ recipe.image_url }}" width="20" height="200" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></h5>
                 <p class="card-text">Time needed: {{ recipe.time_needed }} minutes</p>
             </div>
+            <button type="button" class="btn btn-danger">
+                <a href = "/recipes/{{ recipe.id }}/deleteRecipe" style="color:#FDFEFE;"> X </a>
+            </button>
         </div>
-        <button
-                type="button" class="btn btn-primary"> <a href = "/recipes/{{ recipe.id }}/deleteRecipe"> Delete </a>
-        </button>
+        <br>
     </div>
-
     {% endfor %}
 </div>
+
 
 <!--</ul>-->
 {% endblock %}
