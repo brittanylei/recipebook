@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{ form.name.label }}: {{ form.name }}<br>
+    {{ form.amount.label }}: {{form.amount}} {{ form.unit }}<br>
+
+    <input type='submit' value='Add' action="../../"/>
+</form>
+
+
+{% endblock %}

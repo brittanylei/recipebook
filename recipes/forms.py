@@ -8,11 +8,14 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = [
-            'name', 'ingredients', 'category', 'time_needed', 'image_url', 'recipe_ref'
+            'name', 'ingredients', 'category', 'time_needed', 'image_url',
+            'recipe_ref', 'notes'
         ]
         widgets= {
             'ingredients': forms.CheckboxSelectMultiple(),
-            'category': forms.CheckboxSelectMultiple()
+            # 'ingredients': forms.HiddenInput(),
+            'category': forms.CheckboxSelectMultiple(),
+            'notes': forms.Textarea(attrs={'rows': 5, 'cols': 50}),
         }
 
 
@@ -36,5 +39,5 @@ class DirectionForm(forms.ModelForm):
         fields = [
             'step', 'description', 'recipe'
         ]
-
+        exclude = ('recipe',)
 
