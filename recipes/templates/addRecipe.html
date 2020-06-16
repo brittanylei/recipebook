@@ -9,16 +9,17 @@
     {{ form.category.label }}: {{ form.category }}
     {{ form.ingredients.label }}:
         <button type="button" class="btn btn-primary">
-            <a href = "/recipes/addIngredient/" style="color:#FDFEFE;"> + </a>
+            <a href = "/recipes/addRecipe/addIngredient/" style="color:#FDFEFE;"> + </a>
         </button><br>
         {% for ingredient in form.ingredients %}
-            {{ ingredient }} <br>
+            {{ ingredient }}
+            <br>
         {% endfor %}
     {{ form.image_url.label }}: {{ form.image_url }}<br><br>
     {{ form.recipe_ref.label }}: {{ form.recipe_ref }}<br><br>
     {{ form.time_needed.label }}: {{ form.time_needed }} minutes<br>
 
-    Directions/Notes:<br> {{ form.notes }}
+    Directions/Notes:<br> {{ form.notes }} <br>
 
 <!--    {{ d_form.management_form }}-->
 <!--    {% for direction in d_form %}-->

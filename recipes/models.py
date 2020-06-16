@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinValueValidator
+
 
 # Create your models here.
 
@@ -32,8 +34,11 @@ class Unit(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
-    amount = models.FloatField()
+    amount = models.FloatField(validators=[MinValueValidator(0.0)])
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        unique_together = ('name', 'amount', 'unit')
 
     def __str__(self):
         if self.unit is None:
