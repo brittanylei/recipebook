@@ -8,7 +8,7 @@
     {{ form.name.label }}: {{ form.name }}<br>
     {{ form.amount.label }}: {{form.amount}} {{ form.unit }}<br>
 
-    <input type='submit' value='Add' action="/recipes/addRecipe"/><br><br>
+    <input type='submit' value='Add' action=""/><br><br>
 
     {% if form.errors %}
         {% for field in form %}
