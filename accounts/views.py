@@ -10,30 +10,36 @@ from django.http import HttpResponseRedirect
 
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(username)
-        print(password)
-        user = authenticate(request, username=username, password=password)
+    if request.user.is_authenticated:
+        return redirect('recipes:index')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            print(username)
+            print(password)
+            user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            print("user is valid")
-            return redirect(reverse('recipes:index'))
-        else:
-            print("oops")
-            messages.info(request, "username and/or password incorrect")
+            if user is not None:
+                login(request, user)
+                print("user is valid")
+                return redirect(reverse('recipes:index'))
+            else:
+                print("oops")
+                messages.info(request, "username and/or password incorrect")
 
-    context = {}
-    return render(request, 'login.html', context)
+        context = {}
+        return render(request, 'login.html', context)
 
 
 def register_view(request):
-    form = CreateUserForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect(reverse('accounts:login'))
+    if request.user.is_authenticated:
+        return redirect('recipes:index')
+    else:
+        form = CreateUserForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('accounts:login'))
 
     context = {'form': form}
     return render(request, 'register.html', context)
