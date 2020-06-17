@@ -5,6 +5,7 @@ from .models import Recipe, Ingredient, Direction, Unit
 
 
 class RecipeForm(forms.ModelForm):
+
     class Meta:
         model = Recipe
         fields = [
@@ -13,7 +14,6 @@ class RecipeForm(forms.ModelForm):
         ]
         widgets= {
             'ingredients': forms.CheckboxSelectMultiple(),
-            # 'ingredients': forms.HiddenInput(),
             'category': forms.CheckboxSelectMultiple(),
             'notes': forms.Textarea(attrs={'rows': 5, 'cols': 50}),
         }

@@ -17,7 +17,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField('Ingredient', related_name='ingredient_set')
     category = models.ManyToManyField('Category', related_name='category_set', blank=True)
     time_needed = models.FloatField(blank=True)
-    image_url = models.CharField(max_length=255, blank=True)
+    image_url = models.CharField(max_length=255, blank=True, default='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png')
     recipe_ref = models.CharField(max_length=255, blank=True, default='')
     notes = models.CharField(max_length=1000, default='', blank=True)
 
@@ -38,7 +38,8 @@ class Ingredient(models.Model):
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
-        unique_together = ('name', 'amount', 'unit')
+        unique_together = ('name', 'amount', 'unit'),
+        ordering = ['name']
 
     def __str__(self):
         if self.unit is None:

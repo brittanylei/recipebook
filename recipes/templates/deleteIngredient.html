@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    Permanently Delete {{ ingredient.name }}?
+    <input type='submit' value='Delete' />
+    <br>
+    <a href = "{% url 'index' %}"> nevermind! </a>
+</form>
+
+{% endblock %}

@@ -66,13 +66,20 @@ def edit_recipe(request, recipe_id):
     return render(request, 'editRecipe.html', context)
 
 
-def add_ingredient(request):
+def add_ingredient(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
     form = IngredientForm(request.POST or None)
-    messages = {}
     if form.is_valid():
         form.save()
         return redirect("../")
-    context = {'form': form, 'messages': messages}
+    context = {'form': form, 'recipe': recipe}
     return render(request, 'addIngredient.html', context)
 
 
+def delete_ingredient(request, ingredient_id):
+    ingredient = Ingredient.objects.get(id=ingredient_id)
+    if request.method == "POST":
+        ingredient.delete()
+        return redirect("../../")
+    context = {'ingredient': ingredient}
+    return render(request, 'deleteIngredient.html', context)
