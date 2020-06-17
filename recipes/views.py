@@ -2,7 +2,7 @@
 from django.core.mail.backends import console
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Recipe, Ingredient, Direction
+from .models import Recipe, Ingredient, Direction, Category
 from .forms import RecipeForm, IngredientForm, DirectionForm, UnitForm
 from django.forms import modelformset_factory, formset_factory
 from django.contrib import messages
@@ -11,9 +11,9 @@ from django.contrib import messages
 
 
 def index(request):
-    # return HttpResponse("Recipes")
     recipes = Recipe.objects.all()
-    context = {'recipes': recipes}
+    categories = Category.objects.all()
+    context = {'recipes': recipes, 'categories': categories}
     return render(request, 'index.html', context)
 
 
@@ -22,6 +22,12 @@ def detail(request, recipe_id):
     context = {'recipe': recipe}
     return render(request, 'detail.html', context)
 
+
+def view_category(request, category_name):
+    recipes = Recipe.objects.filter(category__name=category_name)
+    categories = Category.objects.all()
+    context = {'recipes': recipes, 'categories': categories}
+    return render(request, 'category.html', context)
 
 def add_recipe(request):
     form = RecipeForm(request.POST or None)
