@@ -10,11 +10,21 @@ from django.contrib import messages
 # Create your views here.
 
 
-def index(request):
-    recipes = Recipe.objects.all()
+def index(request, category_name=''):
+    if category_name:
+        recipes = Recipe.objects.filter(category__name=category_name)
+    else:
+        recipes = Recipe.objects.all()
     categories = Category.objects.all()
     context = {'recipes': recipes, 'categories': categories}
     return render(request, 'index.html', context)
+
+
+# def view_category(request, category_name):
+#     recipes = Recipe.objects.filter(category__name=category_name)
+#     categories = Category.objects.all()
+#     context = {'recipes': recipes, 'categories': categories}
+#     return render(request, 'index.html', context)
 
 
 def detail(request, recipe_id):
@@ -22,12 +32,6 @@ def detail(request, recipe_id):
     context = {'recipe': recipe}
     return render(request, 'detail.html', context)
 
-
-def view_category(request, category_name):
-    recipes = Recipe.objects.filter(category__name=category_name)
-    categories = Category.objects.all()
-    context = {'recipes': recipes, 'categories': categories}
-    return render(request, 'category.html', context)
 
 def add_recipe(request):
     form = RecipeForm(request.POST or None)
