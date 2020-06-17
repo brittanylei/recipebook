@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -13,6 +14,7 @@ class Category(models.Model):
 
 
 class Recipe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100, unique=True)
     ingredients = models.ManyToManyField('Ingredient', related_name='ingredient_set')
     category = models.ManyToManyField('Category', related_name='category_set', blank=True)

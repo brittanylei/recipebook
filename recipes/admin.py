@@ -7,6 +7,7 @@ from .models import Category, Recipe, Ingredient, Direction, Unit
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', )
 
+
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name', )
 

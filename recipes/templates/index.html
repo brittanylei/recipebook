@@ -4,13 +4,13 @@
 
 <nav class="navbar navbar-light bg-light">
     {% for category in categories %}
-        <a class="navbar-brand" href="{% url 'category' category.name %}">{{ category.name }}</a>
+        <a class="navbar-brand" href="{% url 'recipes:category' category.name %}">{{ category.name }}</a>
     {% endfor %}
 </nav>
 
 <h1>Recipes
     <button type="button" class="btn btn-primary">
-        <a href = "{% url 'add-recipe' %}" style="color:#FDFEFE;"> Add </a>
+        <a href = "{% url 'recipes:add-recipe' %}" style="color:#FDFEFE;"> Add </a>
     </button>
 </h1>
 <br>
@@ -24,7 +24,7 @@
                 <p class="card-text">Time needed: {{ recipe.time_needed }} minutes</p>
             </div>
             <button type="button" class="btn btn-danger">
-                <a href = "{% url 'delete-recipe' recipe.id %}" style="color:#FDFEFE;"> X </a>
+                <a href = "{% url 'recipes:delete-recipe' recipe.id %}" style="color:#FDFEFE;"> X </a>
             </button>
         </div>
         <br>

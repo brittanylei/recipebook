@@ -12,11 +12,16 @@ class RecipeForm(forms.ModelForm):
             'name', 'ingredients', 'category', 'time_needed', 'image_url',
             'recipe_ref', 'notes'
         ]
-        widgets= {
+        exclude = ['user']
+        widgets = {
             'ingredients': forms.CheckboxSelectMultiple(),
             'category': forms.CheckboxSelectMultiple(),
             'notes': forms.Textarea(attrs={'rows': 5, 'cols': 50}),
         }
+
+    # def __init__(self, *args, **kwargs):
+    #     self.user = kwargs.pop('user')
+    #     super(RecipeForm, self).__init__(*args, **kwargs)
 
 
 class IngredientForm(forms.ModelForm):

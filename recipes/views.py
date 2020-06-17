@@ -6,15 +6,16 @@ from .models import Recipe, Ingredient, Direction, Category
 from .forms import RecipeForm, IngredientForm, DirectionForm, UnitForm
 from django.forms import modelformset_factory, formset_factory
 from django.contrib import messages
+from django.urls import reverse
 
 # Create your views here.
 
 
 def index(request, category_name=''):
     if category_name:
-        recipes = Recipe.objects.filter(category__name=category_name)
+        recipes = Recipe.objects.filter(category__name=category_name, user=request.user)
     else:
-        recipes = Recipe.objects.all()
+        recipes = Recipe.objects.filter(user=request.user)
     categories = Category.objects.all()
     context = {'recipes': recipes, 'categories': categories}
     return render(request, 'index.html', context)
@@ -28,25 +29,27 @@ def detail(request, recipe_id):
 
 def add_recipe(request):
     form = RecipeForm(request.POST or None)
-    d_set = modelformset_factory(model=Direction, form=DirectionForm, extra=3, exclude=())
-    d_form = d_set(request.POST or None, request.FILES or None)
-    recipe_name = request.POST.get('name',0)
+    # d_set = modelformset_factory(model=Direction, form=DirectionForm, extra=3, exclude=())
+    # d_form = d_set(request.POST or None, request.FILES or None)
+    # recipe_name = request.POST.get('name',0)
     print(form.errors)
     print(form.non_field_errors())
 
     if form.is_valid():
         print("valid")
+        recipe = form.save(commit=False)
+        recipe.user = request.user
+        recipe.save()
         form.save()
-        recipe = Recipe.objects.get(name=recipe_name)
-        if recipe and d_form.is_valid():
-            for form in d_form:
-                form = form.save(commit=False)
-                form.recipe = recipe
-                form.save()
-            # d_form = d_form.save(commit=False)
-            # d_form.recipe = recipe
-            # d_form.save()
-    context = {'form': form, 'd_form': d_form}
+        # print(f'user: {form.cleaned_data["user"]}')
+        # recipe = Recipe.objects.get(name=recipe_name)
+        # if recipe and d_form.is_valid():
+        #     for form in d_form:
+        #         form = form.save(commit=False)
+        #         form.recipe = recipe
+        #         form.save()
+        return redirect(reverse('recipes:index'))
+    context = {'form': form}
     return render(request, 'addRecipe.html', context)
 
 

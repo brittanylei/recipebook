@@ -9,7 +9,7 @@
     {{ form.category.label }}: {{ form.category }}
     {{ form.ingredients.label }}:
         <button type="button" class="btn btn-primary">
-            <a href = "{% url 'add-ingredient' %}" style="color:#FDFEFE;"> + </a>
+            <a href = "{% url 'recipes:add-ingredient' %}" style="color:#FDFEFE;"> + </a>
         </button><br>
         {% for ingredient in form.ingredients %}
             {{ ingredient }}

@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>My Recipe Book!</title>
 </head>
 <body>
 <!-- As a link -->
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">My Recipes</a>
+    <a class="navbar-brand" href="{% url 'recipes:index' %}">My Recipes</a>
+    <a href="{% url 'accounts:logout' %}">Logout {{request.user}}</a>
 </nav>
 
 <div class="container">
