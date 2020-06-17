@@ -20,13 +20,6 @@ def index(request, category_name=''):
     return render(request, 'index.html', context)
 
 
-# def view_category(request, category_name):
-#     recipes = Recipe.objects.filter(category__name=category_name)
-#     categories = Category.objects.all()
-#     context = {'recipes': recipes, 'categories': categories}
-#     return render(request, 'index.html', context)
-
-
 def detail(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     context = {'recipe': recipe}
@@ -76,13 +69,22 @@ def edit_recipe(request, recipe_id):
     return render(request, 'editRecipe.html', context)
 
 
-def add_ingredient(request, recipe_id):
+def edit_add_ingredient(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     form = IngredientForm(request.POST or None)
     if form.is_valid():
         form.save()
         return redirect("../")
     context = {'form': form, 'recipe': recipe}
+    return render(request, 'addIngredient.html', context)
+
+
+def add_ingredient(request):
+    form = IngredientForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("../")
+    context = {'form': form}
     return render(request, 'addIngredient.html', context)
 
 
