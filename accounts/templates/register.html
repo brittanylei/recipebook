@@ -1,8 +1,30 @@
-<h1>Register</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<title>Register</title>
+<br><h3>Create Your Account</h3>
 
 <form method="POST" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input type="submit" name="Create User">
+  {% csrf_token %}<br>
+  <div class="form-group">
+    <label>{{ form.username.label }}</label>
+    {{ form.username }}
+  </div>
+  <div class="form-group">
+    <label>{{ form.email.label }}</label>
+    {{ form.email }}
+  </div>
+    <div class="form-group">
+    <label>{{ form.password1.label }}</label>
+    {{ form.password1 }}
+  </div>
+    <div class="form-group">
+    <label>{{ form.password2.label }}</label>
+    {{ form.password2 }}
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+
+{% endblock %}

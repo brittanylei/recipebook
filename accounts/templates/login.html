@@ -1,15 +1,29 @@
-<form method="POST" action="">
-    {% csrf_token %}
-  Username:
-  <input type="text" id="username" name="username"><br><br>
+{% extends 'base.html' %}
 
-  Password:
-  <input type="password" id="password" name="password"><br><br>
-  <input type="submit" value="Login">
+{% block content %}
+
+<title>Login</title>
+
+<form method="POST" action="">
+  {% csrf_token %}<br>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" name="username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
 </form>
+<br>
 
 {% for message in messages %}
-  <p id="messages">{{ message }}</p>
+  <div class="alert alert-danger" role="alert">
+    {{ message }}
+  </div>
 {% endfor %}
 
-New user? <a href="{% url 'accounts:register' %}">Register Here!</a>
+<p>New user? <a href="{% url 'accounts:register' %}">Register Here!</a></p>
+
+{% endblock %}
