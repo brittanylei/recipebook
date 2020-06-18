@@ -2,26 +2,46 @@
 
 {% block content %}
 
-<h1>Edit {{ recipe.name }}</h1>
+<br><h3>Edit {{ recipe.name }}</h3>
 
-<form action="" method="POST">
-    {% csrf_token %}
-        {{ form.name.label }}: {{ form.name }}<br>
-    {{ form.category.label }}: {{ form.category }}
-    {{ form.ingredients.label }}:
-        <button type="button" class="btn btn-primary">
-            <a href = "{% url 'recipes:edit-add-ingredient' recipe.id %}" style="color:#FDFEFE;"> + </a>
-        </button><br>
-        {% for ingredient in form.ingredients %}
-            {{ ingredient }}
-            <br>
-        {% endfor %}
-    {{ form.image_url.label }}: {{ form.image_url }}<br><br>
-    {{ form.recipe_ref.label }}: {{ form.recipe_ref }}<br><br>
-    {{ form.time_needed.label }}: {{ form.time_needed }} minutes<br>
+<form method="POST" action="">
+  {% csrf_token %}<br>
+  <div class="form-group">
+      <label>{{ form.name.label }}</label>
+      {{ form.name }}
+  </div>
 
-    Directions/Notes:<br> {{ form.notes }} <br>
-    <input type='submit' value='Save' />
+  <div class="form-group">
+      <label>{{ form.category.label }}</label><br>
+      {% for category in form.category %}
+        {{ category }}<br>
+      {% endfor %}
+  </div>
+
+  <div class="form-group">
+      <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:edit-add-ingredient' recipe.id %}"> + </a></label><br>
+      {% for ingredient in form.ingredients %}
+        {{ ingredient }}<br>
+      {% endfor %}
+  </div>
+
+  <div class="form-group">
+      <label>{{ form.image_url.label }}</label>
+      {{ form.image_url }}
+  </div>
+  <div class="form-group">
+      <label>{{ form.recipe_ref.label }}</label>
+      {{ form.recipe_ref }}
+  </div>
+  <div class="form-group">
+      <label>{{ form.time_needed.label }}</label>
+      {{ form.time_needed }}
+  </div>
+  <div class="form-group">
+      <label>Directions/Notes:</label>
+      {{ form.notes }}
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
 {% endblock %}

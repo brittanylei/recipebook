@@ -2,10 +2,14 @@
 
 {% block content %}
 
-<nav class="navbar navbar-light bg-light">
-    {% for category in categories %}
-        <a class="navbar-brand" href="{% url 'recipes:category' category.name %}">{{ category.name }}</a>
-    {% endfor %}
+<nav class="navbar navbar-light">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        {% for category in categories %}
+<!--            <button type="button" class="btn btn-link btn-lg">-->
+                <a class="navbar-brand" href="{% url 'recipes:category' category.name %}">{{ category.name }}</a>
+<!--            </button>-->
+        {% endfor %}
+    </div>
 </nav>
 
 <h1>Recipes
