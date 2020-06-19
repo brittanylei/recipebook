@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='accounts:login')
 def index(request, category_name=''):
     if category_name:
-        recipes = Recipe.objects.filter(category__name=category_name, user=request.user)
+        recipes = Recipe.objects.filter(categories__name=category_name, user=request.user)
     else:
         recipes = Recipe.objects.filter(user=request.user)
     categories = Category.objects.all()
