@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import Recipe, Ingredient, Direction, Unit, Category
+from django.contrib.auth.models import User
 
 
 class RecipeForm(forms.ModelForm):
@@ -20,9 +21,9 @@ class RecipeForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        #     self.user = kwargs.pop('user')
-        #     super(RecipeForm, self).__init__(*args, **kwargs)
+        self.request = kwargs.pop('request')
         super(RecipeForm, self).__init__(*args, **kwargs)
+
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
@@ -34,6 +35,11 @@ class RecipeForm(forms.ModelForm):
         self.fields['categories'].widget.attrs.update({
             'class': 'form-check-input'
         })
+        admin_user = User.objects.filter(id=1)[0]
+        self.fields['ingredients'].queryset = Ingredient.objects.filter(user=self.request.user) \
+                                              | Ingredient.objects.filter(user=admin_user)
+        self.fields['categories'].queryset = Category.objects.filter(user=self.request.user) \
+                                             | Category.objects.filter(user=admin_user)
 
 
 class IngredientForm(forms.ModelForm):
@@ -44,11 +50,15 @@ class IngredientForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
         super(IngredientForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+        admin_user = User.objects.filter(id=1)[0]
+        self.fields['unit'].queryset = Unit.objects.filter(user=self.request.user) \
+                                       | Unit.objects.filter(user=admin_user)
 
 
 class UnitForm(forms.ModelForm):

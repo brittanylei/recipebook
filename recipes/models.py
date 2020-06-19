@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
@@ -28,6 +29,7 @@ class Recipe(models.Model):
 
 
 class Unit(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
     measure = models.CharField(max_length=10, unique=True, blank=True)
 
     def __str__(self):
@@ -35,6 +37,7 @@ class Unit(models.Model):
 
 
 class Ingredient(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
     name = models.CharField(max_length=50)
     amount = models.FloatField(validators=[MinValueValidator(0.0)])
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
@@ -50,6 +53,7 @@ class Ingredient(models.Model):
 
 
 class Direction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
     step = models.IntegerField()
     description = models.CharField(max_length=100)
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, blank=True, null=True)

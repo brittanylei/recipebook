@@ -32,7 +32,7 @@ def detail(request, recipe_id):
 
 @login_required(login_url='accounts:login')
 def add_recipe(request):
-    form = RecipeForm(request.POST or None)
+    form = RecipeForm(request.POST or None, request=request)
     # d_set = modelformset_factory(model=Direction, form=DirectionForm, extra=3, exclude=())
     # d_form = d_set(request.POST or None, request.FILES or None)
     # recipe_name = request.POST.get('name',0)
@@ -70,7 +70,7 @@ def delete_recipe(request, recipe_id):
 @login_required(login_url='accounts:login')
 def edit_recipe(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
-    form = RecipeForm(request.POST or None, instance=recipe)
+    form = RecipeForm(request.POST or None, instance=recipe, request=request)
     if form.is_valid():
         form.save()
         return redirect("../")
@@ -81,7 +81,7 @@ def edit_recipe(request, recipe_id):
 @login_required(login_url='accounts:login')
 def edit_add_ingredient(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
-    form = IngredientForm(request.POST or None)
+    form = IngredientForm(request.POST or None, request=request)
     if form.is_valid():
         form.save()
         return redirect("../")
@@ -91,7 +91,7 @@ def edit_add_ingredient(request, recipe_id):
 
 @login_required(login_url='accounts:login')
 def add_ingredient(request):
-    form = IngredientForm(request.POST or None)
+    form = IngredientForm(request.POST or None, request=request)
     if form.is_valid():
         form.save()
         return redirect("../")
