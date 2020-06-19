@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<br><h3>Edit {{ recipe.name }}</h3>
+{% if recipe %}
+    <br><h3>Edit {{ recipe.name }}</h3>
+{% endif %}
 
 <form method="POST" action="">
   {% csrf_token %}<br>
@@ -19,7 +21,12 @@
   </div>
 
   <div class="form-group">
-      <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:edit-add-ingredient' recipe.id %}"> + </a></label><br>
+      {% if recipe%}
+        <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:edit-add-ingredient' recipe.id %}"> + </a></label><br>
+      {% else %}
+        <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:add-ingredient' %}"> + </a></label><br>
+      {% endif %}
+
       {% for ingredient in form.ingredients %}
         {{ ingredient }}<br>
       {% endfor %}

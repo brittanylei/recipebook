@@ -54,7 +54,7 @@ def add_recipe(request):
         #         form.save()
         return redirect(reverse('recipes:index'))
     context = {'form': form}
-    return render(request, 'addRecipe.html', context)
+    return render(request, 'editRecipe.html', context)
 
 
 @login_required(login_url='accounts:login')
