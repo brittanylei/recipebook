@@ -3,7 +3,7 @@ from django.core.mail.backends import console
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Recipe, Ingredient, Direction, Category
-from .forms import RecipeForm, IngredientForm, DirectionForm, UnitForm
+from .forms import RecipeForm, IngredientForm, DirectionForm, UnitForm, CategoryForm
 from django.forms import modelformset_factory, formset_factory
 from django.contrib import messages
 from django.urls import reverse
@@ -107,3 +107,13 @@ def delete_ingredient(request, ingredient_id):
         return redirect("../../")
     context = {'ingredient': ingredient}
     return render(request, 'deleteIngredient.html', context)
+
+
+@login_required(login_url='accounts:login')
+def add_category(request):
+    form = CategoryForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("../")
+    context = {'form': form}
+    return render(request, 'addCategory.html', context)

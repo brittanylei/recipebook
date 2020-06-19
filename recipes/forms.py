@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Recipe, Ingredient, Direction, Unit
+from .models import Recipe, Ingredient, Direction, Unit, Category
 
 
 class RecipeForm(forms.ModelForm):
@@ -9,13 +9,13 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = [
-            'name', 'ingredients', 'category', 'time_needed', 'image_url',
+            'name', 'ingredients', 'categories', 'time_needed', 'image_url',
             'recipe_ref', 'notes'
         ]
         exclude = ['user']
         widgets = {
             'ingredients': forms.CheckboxSelectMultiple(),
-            'category': forms.CheckboxSelectMultiple(),
+            'categories': forms.CheckboxSelectMultiple(),
             'notes': forms.Textarea(attrs={'rows': 5, 'cols': 50}),
         }
 
@@ -31,7 +31,7 @@ class RecipeForm(forms.ModelForm):
             'class': 'form-check-input',
             # 'class': 'form-inline'
         })
-        self.fields['category'].widget.attrs.update({
+        self.fields['categories'].widget.attrs.update({
             'class': 'form-check-input'
         })
 
@@ -49,6 +49,7 @@ class IngredientForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+
 
 class UnitForm(forms.ModelForm):
     class Meta:
@@ -78,3 +79,15 @@ class DirectionForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })

@@ -13,5 +13,7 @@ urlpatterns = [
     path('addRecipe/addIngredient/', views.add_ingredient, name='add-ingredient'),
     path('<int:recipe_id>/editRecipe/addIngredient/', views.edit_add_ingredient, name='edit-add-ingredient'),
     path('editRecipe/<int>:ingredient_id/deleteIngredient/', views.delete_ingredient, name='delete-ingredient'),
+    path('addCategory/', views.add_category, name='add-category'),
     path('<category_name>/', views.index, name='category'),
+
 ]

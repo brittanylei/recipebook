@@ -5,10 +5,13 @@
 <nav class="navbar navbar-light">
     <div class="btn-group" role="group" aria-label="Basic example">
         {% for category in categories %}
-<!--            <button type="button" class="btn btn-link btn-lg">-->
+            <button type="button" class="btn btn-link btn-lg">
                 <a class="navbar-brand" href="{% url 'recipes:category' category.name %}">{{ category.name }}</a>
-<!--            </button>-->
+            </button>
         {% endfor %}
+        <button type="button" class="btn btn-link btn-lg">
+            <a class="navbar-brand" href="{% url 'recipes:add-category' %}">+</a>
+        </button>
     </div>
 </nav>
 

@@ -14,8 +14,8 @@
   </div>
 
   <div class="form-group">
-      <label>{{ form.category.label }}</label><br>
-      {% for category in form.category %}
+      <label>{{ form.categories.label }}<a href = "{% url 'recipes:add-category' %}"> + </a></label><br>
+      {% for category in form.categories %}
         {{ category }}<br>
       {% endfor %}
   </div>
