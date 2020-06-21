@@ -20,9 +20,10 @@
     <br>
 
     Directions: <br>
-    {% for direction in recipe.direction_set.all %}
-        {{ direction.step }}. {{ direction.description }} <br>
-    {% endfor %}
+<!--    {% for direction in recipe.direction_set.all %}-->
+<!--        {{ direction.step }}. {{ direction.description }} <br>-->
+<!--    {% endfor %}-->
+    {{ recipe.notes }}
     <br>
 </div>
 

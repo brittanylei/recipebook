@@ -25,6 +25,9 @@
     {% for recipe in recipes %}
     <div class="col-md-4">
         <div class="card" style="width: 20rem; height: 20rem;">
+<!--              <div class="card-header">-->
+<!--                  <center><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></center>-->
+<!--              </div>-->
             <img src="{{ recipe.image_url }}" width="20" height="200" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></h5>

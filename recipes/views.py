@@ -73,7 +73,7 @@ def edit_recipe(request, recipe_id):
     form = RecipeForm(request.POST or None, instance=recipe, request=request)
     if form.is_valid():
         form.save()
-        return redirect("../")
+        return redirect(reverse('recipes:detail', args=(recipe_id,)))
     context = {'recipe': recipe, 'form':  form}
     return render(request, 'editRecipe.html', context)
 
