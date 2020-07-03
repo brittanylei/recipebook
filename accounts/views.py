@@ -36,6 +36,8 @@ def register_view(request):
         if form.is_valid():
             form.save()
             return redirect(reverse('accounts:login'))
+        else:
+            messages.info(request, "Failed to register user.")
 
     context = {'form': form}
     return render(request, 'register.html', context)
