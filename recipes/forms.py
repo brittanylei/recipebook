@@ -25,21 +25,23 @@ class RecipeForm(forms.ModelForm):
         super(RecipeForm, self).__init__(*args, **kwargs)
 
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
-        self.fields['ingredients'].widget.attrs.update({
-            'class': 'form-check-input',
-            # 'class': 'form-inline'
-        })
-        self.fields['categories'].widget.attrs.update({
-            'class': 'form-check-input'
-        })
-        admin_user = User.objects.filter(id=1)[0]
-        self.fields['ingredients'].queryset = Ingredient.objects.filter(user=self.request.user) \
-                                              | Ingredient.objects.filter(user=admin_user)
-        self.fields['categories'].queryset = Category.objects.filter(user=self.request.user) \
-                                             | Category.objects.filter(user=admin_user)
+            if field != 'ingredients' and field != 'categories':
+                self.fields[field].widget.attrs.update({
+                    'class': 'form-control'
+                })
+
+            # self.fields['ingredients'].widget.attrs.update({
+            #     'class': 'form-check-input',
+            #     'class': 'form-inline',
+            # })
+            # self.fields['categories'].widget.attrs.update({
+            #     'class': 'form-check-input'
+            # })
+            admin_user = User.objects.filter(id=1)[0]
+            self.fields['ingredients'].queryset = Ingredient.objects.filter(user=self.request.user) \
+                                                  | Ingredient.objects.filter(user=admin_user)
+            self.fields['categories'].queryset = Category.objects.filter(user=self.request.user) \
+                                                 | Category.objects.filter(user=admin_user)
 
 
 class IngredientForm(forms.ModelForm):

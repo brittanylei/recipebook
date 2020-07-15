@@ -4,7 +4,7 @@
 
 <h1> {{ recipe.name }} </h1>
 
-<div class="row">
+<div>
     {% if recipe.recipe_ref %}
         Reference: {{ recipe.recipe_ref }} <br>
     {% endif %}
@@ -19,12 +19,11 @@
     {% endfor %}
     <br>
 
-    Directions: <br>
+    Directions:
 <!--    {% for direction in recipe.direction_set.all %}-->
 <!--        {{ direction.step }}. {{ direction.description }} <br>-->
 <!--    {% endfor %}-->
-    {{ recipe.notes }}
-    <br>
+    {{ recipe.notes|linebreaks }}
 </div>
 
 <button type="button" class="btn btn-primary">

@@ -22,7 +22,7 @@ class Recipe(models.Model):
     time_needed = models.FloatField(blank=True)
     image_url = models.CharField(max_length=255, blank=True, default='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png')
     recipe_ref = models.CharField(max_length=255, blank=True, default='')
-    notes = models.CharField(max_length=1000, default='', blank=True)
+    notes = models.TextField(max_length=1000, default='', blank=True)
 
     def __str__(self):
         return self.name
