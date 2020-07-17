@@ -25,7 +25,7 @@ SECRET_KEY = 'efw0a$p)t9=t6+@@1-)*)ci_n6wg+je3f0_*b-)ecpfutyv2#i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blei-recipebook.herokuapp.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['blei-recipebook.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
