@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Recipe, Ingredient, Unit, Category
+from .models import Recipe, Ingredient, Category
 from django.contrib.auth.models import User
 
 
@@ -42,7 +42,7 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = [
-            'recipe', 'name', 'amount', 'unit'
+            'recipe', 'name', 'amount', 'unit', 'prep'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -53,21 +53,21 @@ class IngredientForm(forms.ModelForm):
                 'class': 'form-control'
             })
         admin_user = User.objects.filter(id=1)[0]
-        self.fields['unit'].queryset = Unit.objects.filter(user=self.request.user) \
-                                       | Unit.objects.filter(user=admin_user)
+        # self.fields['unit'].queryset = Unit.objects.filter(user=self.request.user) \
+        #                                | Unit.objects.filter(user=admin_user)
 
 
-class UnitForm(forms.ModelForm):
-    class Meta:
-        model = Unit
-        fields = ['measure']
-
-    def __init__(self, *args, **kwargs):
-        super(UnitForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+# class UnitForm(forms.ModelForm):
+#     class Meta:
+#         model = Unit
+#         fields = ['measure']
+#
+#     def __init__(self, *args, **kwargs):
+#         super(UnitForm, self).__init__(*args, **kwargs)
+#         for field in iter(self.fields):
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control'
+#             })
 
 
 class CategoryForm(forms.ModelForm):

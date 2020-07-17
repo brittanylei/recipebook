@@ -15,7 +15,7 @@
     </div>
 </nav>
 
-<h1>Recipes
+<h1><a href="{% url 'recipes:index' %}" style="color:#000000">Recipes</a>
     <button type="button" class="btn btn-primary">
         <a href = "{% url 'recipes:add-recipe' %}" style="color:#FDFEFE;"> Add </a>
     </button>
@@ -30,17 +30,48 @@
 <!--              </div>-->
             <img src="{{ recipe.image_url }}" width="20" height="200" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></h5>
+                <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a>
+                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#preview{{recipe.id}}Modal"
+                            style="float:right;">
+                        Preview
+                    </button>
+                </h5>
+
                 <p class="card-text">
-                    Time needed:
-                    {% if recipe.time_needed is not None %}
-                        {{ recipe.time_needed }} minutes
-                    {% endif %}
+
+                    <div class="modal fade" id="preview{{recipe.id}}Modal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ recipe.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              Ingredients needed: <br>
+                              {% for ingredient in recipe.ingredient_set.all %}
+                                {{ ingredient }}
+                                <br>
+                              {% endfor %}
+                              <br>
+                              Time needed:
+                              {% if recipe.time_needed is not None %}
+                                {{ recipe.time_needed }} minutes
+                              {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
                 </p>
+
             </div>
-            <button type="button" class="btn btn-danger">
-                <a href = "{% url 'recipes:delete-recipe' recipe.id %}" style="color:#FDFEFE;"> X </a>
-            </button>
+                    <button type="button" class="btn btn-outline-danger" style="float: right;">
+                        <a href = "{% url 'recipes:delete-recipe' recipe.id %}" style="color: #000000;"> X </a>
+                    </button>
         </div>
         <br>
     </div>

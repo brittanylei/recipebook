@@ -27,12 +27,12 @@ class Recipe(models.Model):
         return self.name
 
 
-class Unit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    measure = models.CharField(max_length=10, unique=True, blank=True)
-
-    def __str__(self):
-        return self.measure
+# class Unit(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+#     measure = models.CharField(max_length=10, unique=True, blank=True)
+#
+#     def __str__(self):
+#         return self.measure
 
 
 class Ingredient(models.Model):
@@ -40,14 +40,18 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     amount = models.FloatField(validators=[MinValueValidator(0.0)])
-    unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
+    # unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
+    unit = models.CharField(max_length=20, null=True)
+    prep = models.CharField(max_length=25, default="", blank=True)
 
     class Meta:
-        unique_together = ('name', 'amount', 'unit'),
+        # unique_together = ('name', 'amount', 'unit'),
         ordering = ['name']
 
     def __str__(self):
         if self.unit is None:
             return f'{str(self.amount)} {self.name}'
-        return f'{self.name} ({str(self.amount)} {self.unit.measure})'
+        # return f'{self.name} ({str(self.amount)} {self.unit.measure})'
+        return f'{str(self.amount)} {self.unit} {self.name} {self.prep}'
+
 

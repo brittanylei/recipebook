@@ -2,29 +2,37 @@
 
 {% block content %}
 
-<h1> {{ recipe.name }} </h1>
-
-<div>
-    {% if recipe.recipe_ref %}
-        Reference: {{ recipe.recipe_ref }} <br>
-    {% endif %}
-    Ingredients: <br>
-    {% for ingredient in recipe.ingredient_set.all %}
-        {{ ingredient.amount }}
-        {% for unit in ingredient.unit_set.all %}
-            {{ unit.measure }}
-        {% endfor %}
-        {{ ingredient.name }}
-    <br>
-    {% endfor %}
-    <br>
-
-    Directions:
-    {{ recipe.notes|linebreaks }}
+<div class="recipeheader">
+    <center>
+        <h1>
+            {{ recipe.name }}
+            <button type="button" class="btn btn-primary btn-sm" style="margin-left:10px">
+                <a href = "{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
+            </button>
+        </h1>
+        Categories: |
+        {% for category in recipe.category.all %}
+            {{ category.name }} |
+        {% endfor %}<br>
+        {% if recipe.recipe_ref %}
+            Reference: {{ recipe.recipe_ref }} <br>
+        {% endif %}
+        Time Needed: {{ recipe.time_needed }} minutes <br>
+    </center>
 </div>
 
-<button type="button" class="btn btn-primary">
-        <a href = "{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
-</button>
+<div class="row recipe-row">
+  <div class="column">
+      <center><h5><u>Ingredients</u></h5></center>
+      {% for ingredient in recipe.ingredient_set.all %}
+        {{ ingredient }}<br>
+      {% endfor %}
+  </div>
+  <div class="column">
+      <center><h5><u>Directions</u></h5></center>
+      {{ recipe.notes|linebreaks }}
+  </div>
+</div>
+
 
 {% endblock %}
