@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
@@ -15,9 +15,8 @@ class Category(models.Model):
 
 
 class Recipe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
-    ingredients = models.ManyToManyField('Ingredient', related_name='ingredient_set')
     categories = models.ManyToManyField('Category', related_name='category_set', blank=True)
     time_needed = models.FloatField(blank=True)
     image_url = models.CharField(max_length=255, blank=True, default='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png')
@@ -29,7 +28,7 @@ class Recipe(models.Model):
 
 
 class Unit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     measure = models.CharField(max_length=10, unique=True, blank=True)
 
     def __str__(self):
@@ -37,7 +36,8 @@ class Unit(models.Model):
 
 
 class Ingredient(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     amount = models.FloatField(validators=[MinValueValidator(0.0)])
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
@@ -51,12 +51,3 @@ class Ingredient(models.Model):
             return f'{str(self.amount)} {self.name}'
         return f'{self.name} ({str(self.amount)} {self.unit.measure})'
 
-
-class Direction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, blank=True, null=True)
-    step = models.IntegerField()
-    description = models.CharField(max_length=100)
-    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, blank=True, null=True)
-
-    def __str__(self):
-        return str(self.step) + self.description

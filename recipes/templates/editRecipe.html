@@ -15,7 +15,7 @@
 
   <div class="form-group">
       <label>{{ form.categories.label }}<a href = "{% url 'recipes:add-category' %}"> + </a></label><br>
-      <div class="scrollcontainer">
+      <div class="categorycontainer">
           {% for category in form.categories %}
             {{ category }}<br>
           {% endfor %}
@@ -24,16 +24,12 @@
   </div>
 
   <div class="form-group">
-      {% if recipe%}
-        <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:edit-add-ingredient' recipe.id %}"> + </a></label><br>
-      {% else %}
-        <label>{{ form.ingredients.label }} <a href = "{% url 'recipes:add-ingredient' %}"> + </a></label><br>
-      {% endif %}
-
-      <div class="scrollcontainer">
-          {% for ingredient in form.ingredients %}
-            {{ ingredient }}<br>
-          {% endfor %}
+      {{ formset.management_form }}
+      <label> Ingredients: </label><br>
+      <div class="ingredientcontainer">
+          {% for form in formset %}
+        {{ form }}<br>
+      {% endfor %}
       </div>
 
   </div>

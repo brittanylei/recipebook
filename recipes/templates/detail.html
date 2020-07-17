@@ -9,10 +9,10 @@
         Reference: {{ recipe.recipe_ref }} <br>
     {% endif %}
     Ingredients: <br>
-    {% for ingredient in recipe.ingredients.all %}
+    {% for ingredient in recipe.ingredient_set.all %}
         {{ ingredient.amount }}
         {% for unit in ingredient.unit_set.all %}
-            {{ unit.measure }} fix this :(
+            {{ unit.measure }}
         {% endfor %}
         {{ ingredient.name }}
     <br>
@@ -20,9 +20,6 @@
     <br>
 
     Directions:
-<!--    {% for direction in recipe.direction_set.all %}-->
-<!--        {{ direction.step }}. {{ direction.description }} <br>-->
-<!--    {% endfor %}-->
     {{ recipe.notes|linebreaks }}
 </div>
 

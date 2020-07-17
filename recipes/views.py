@@ -2,10 +2,10 @@
 from django.core.mail.backends import console
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Recipe, Ingredient, Direction, Category
-from .forms import RecipeForm, IngredientForm, DirectionForm, UnitForm, CategoryForm
-from django.forms import modelformset_factory, formset_factory
-from django.contrib import messages
+from .models import Recipe, Ingredient, Category
+from .forms import RecipeForm, IngredientForm, UnitForm, CategoryForm
+from django.forms import modelformset_factory, formset_factory, inlineformset_factory
+# from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -32,28 +32,37 @@ def detail(request, recipe_id):
 
 @login_required(login_url='accounts:login')
 def add_recipe(request):
+    ingredFormSet = inlineformset_factory(Recipe, Ingredient, fields=('name', 'amount', 'unit'), extra=10)
     form = RecipeForm(request.POST or None, request=request)
-    # d_set = modelformset_factory(model=Direction, form=DirectionForm, extra=3, exclude=())
-    # d_form = d_set(request.POST or None, request.FILES or None)
-    # recipe_name = request.POST.get('name',0)
-    print(form.errors)
-    print(form.non_field_errors())
+    formset = ingredFormSet(request.POST or None)
 
-    if form.is_valid():
-        print("valid")
+    if form.is_valid() and formset.is_valid():
         recipe = form.save(commit=False)
         recipe.user = request.user
         recipe.save()
+        ingredients = formset.save(commit=False)
+        for ingredient in ingredients:
+            ingredient.recipe_id = recipe.id
+            ingredient.save()
         form.save()
-        # print(f'user: {form.cleaned_data["user"]}')
-        # recipe = Recipe.objects.get(name=recipe_name)
-        # if recipe and d_form.is_valid():
-        #     for form in d_form:
-        #         form = form.save(commit=False)
-        #         form.recipe = recipe
-        #         form.save()
         return redirect(reverse('recipes:index'))
-    context = {'form': form}
+
+    context = {'form': form, 'formset': formset}
+    return render(request, 'editRecipe.html', context)
+
+
+@login_required(login_url='accounts:login')
+def edit_recipe(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    ingredFormSet = inlineformset_factory(Recipe, Ingredient, fields=('name', 'amount', 'unit'), extra=5)
+    form = RecipeForm(request.POST or None, instance=recipe, request=request)
+    formset = ingredFormSet(request.POST or None, instance=recipe)
+
+    if form.is_valid() and formset.is_valid():
+        form.save()
+        formset.save()
+        return redirect(reverse('recipes:detail', args=(recipe_id,)))
+    context = {'recipe': recipe, 'form':  form, 'formset': formset}
     return render(request, 'editRecipe.html', context)
 
 
@@ -65,17 +74,6 @@ def delete_recipe(request, recipe_id):
         return redirect("../../")
     context = {'recipe': recipe}
     return render(request, 'deleteRecipe.html', context)
-
-
-@login_required(login_url='accounts:login')
-def edit_recipe(request, recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id)
-    form = RecipeForm(request.POST or None, instance=recipe, request=request)
-    if form.is_valid():
-        form.save()
-        return redirect(reverse('recipes:detail', args=(recipe_id,)))
-    context = {'recipe': recipe, 'form':  form}
-    return render(request, 'editRecipe.html', context)
 
 
 @login_required(login_url='accounts:login')
