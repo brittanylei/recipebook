@@ -18,7 +18,7 @@ class Recipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
     categories = models.ManyToManyField('Category', related_name='category_set', blank=True)
-    time_needed = models.FloatField(blank=True)
+    time_needed = models.FloatField(blank=True, null=True)
     image_url = models.CharField(max_length=255, blank=True, default='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png')
     recipe_ref = models.CharField(max_length=255, blank=True, default='')
     notes = models.TextField(max_length=1000, default='', blank=True)
