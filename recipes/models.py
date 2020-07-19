@@ -41,7 +41,7 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=50)
     amount = models.FloatField(validators=[MinValueValidator(0.0)])
     # unit = models.ForeignKey('Unit', on_delete=models.CASCADE, blank=True, null=True)
-    unit = models.CharField(max_length=20, null=True)
+    unit = models.CharField(max_length=20, null=True, blank=True)
     prep = models.CharField(max_length=25, default="", blank=True)
 
     class Meta:
