@@ -35,12 +35,13 @@
 
   {% if form.errors %}
     {% for field in form %}
-        {% for error in field.errors %}
-          <strong>{{ error }}</strong>
-        {% endfor %}
+    <ul>
+      {% for error in field.errors %}
+        <li><strong>{{ error }}</strong></li>
+      {% endfor %}
+    </ul>
     {% endfor %}
   {% endif %}
 </form>
-
 
 {% endblock %}
