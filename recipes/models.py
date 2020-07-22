@@ -19,13 +19,24 @@ class Recipe(models.Model):
     name = models.CharField(max_length=100, unique=True)
     categories = models.ManyToManyField('Category', related_name='category_set', blank=True)
     time_needed = models.FloatField(blank=True, null=True)
-    image_url = models.CharField(max_length=255, blank=True, default='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png')
+    cover_img = models.ImageField(blank=True, null=True, upload_to="covers/")
     recipe_ref = models.CharField(max_length=255, blank=True, default='')
     notes = models.TextField(max_length=1000, default='', blank=True)
 
     def __str__(self):
         return self.name
 
+    def get_cover(self):
+        if not self.cover_img:
+            return None
+        else:
+            return self.cover_img.url
+
+    def get_icon(self):
+        if self.cover_img:
+            return self.cover_img.url
+        else:
+            return "/media/egg.jpg"
 
 # class Unit(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

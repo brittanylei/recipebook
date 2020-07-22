@@ -10,6 +10,10 @@
                 <a href = "{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
             </button>
         </h1>
+        {% if recipe.get_cover is not None %}
+            <img src="{{ recipe.get_cover }}"><br>
+        {% endif %}
+
         Categories: |
         {% for category in recipe.category.all %}
             {{ category.name }} |

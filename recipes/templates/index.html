@@ -28,7 +28,7 @@
 <!--              <div class="card-header">-->
 <!--                  <center><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></center>-->
 <!--              </div>-->
-            <img src="{{ recipe.image_url }}" width="20" height="200" class="card-img-top" alt="...">
+            <img src="{{ recipe.get_icon }}" width="20" height="200" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a>
                     <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#preview{{recipe.id}}Modal"

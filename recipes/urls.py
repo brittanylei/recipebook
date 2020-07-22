@@ -15,5 +15,4 @@ urlpatterns = [
     path('editRecipe/<int>:ingredient_id/deleteIngredient/', views.delete_ingredient, name='delete-ingredient'),
     path('addCategory/', views.add_category, name='add-category'),
     path('<category_name>/', views.index, name='category'),
-
 ]

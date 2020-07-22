@@ -33,7 +33,7 @@ def detail(request, recipe_id):
 @login_required(login_url='accounts:login')
 def add_recipe(request):
     ingredFormSet = inlineformset_factory(Recipe, Ingredient, fields=('name', 'amount', 'unit', 'prep'), extra=10)
-    form = RecipeForm(request.POST or None, request=request)
+    form = RecipeForm(request.POST or None, request.FILES or None, request=request)
     formset = ingredFormSet(request.POST or None)
 
     if form.is_valid() and formset.is_valid():
@@ -55,7 +55,7 @@ def add_recipe(request):
 def edit_recipe(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredFormSet = inlineformset_factory(Recipe, Ingredient, fields=('name', 'amount', 'unit', 'prep'), extra=5)
-    form = RecipeForm(request.POST or None, instance=recipe, request=request)
+    form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe, request=request)
     formset = ingredFormSet(request.POST or None, instance=recipe)
 
     if form.is_valid() and formset.is_valid():

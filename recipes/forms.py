@@ -10,7 +10,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = [
-            'name', 'categories', 'time_needed', 'image_url',
+            'name', 'categories', 'time_needed', 'cover_img',
             'recipe_ref', 'notes'
         ]
         exclude = ['user']
