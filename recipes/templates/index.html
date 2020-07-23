@@ -30,12 +30,16 @@
 <!--              </div>-->
             <img src="{{ recipe.get_icon }}" width="20" height="200" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a>
-                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#preview{{recipe.id}}Modal"
-                            style="float:right;">
+                <h5 class="card-title"><a href = "/recipes/{{ recipe.id }}/"> {{ recipe.name }}</a></h5>
+                <div>
+                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#preview{{recipe.id}}Modal">
                         Preview
                     </button>
-                </h5>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete{{recipe.id}}modal" style="float:right;">
+                        X
+                    </button>
+                    {% include 'deleteRecipe.html' %}
+                </div>
 
                 <p class="card-text">
 
@@ -63,15 +67,12 @@
                         </div>
                       </div>
                     </div>
-
-
-
                 </p>
 
             </div>
-                    <button type="button" class="btn btn-outline-danger" style="float: right;">
-                        <a href = "{% url 'recipes:delete-recipe' recipe.id %}" style="color: #000000;"> X </a>
-                    </button>
+
+
+
         </div>
         <br>
     </div>

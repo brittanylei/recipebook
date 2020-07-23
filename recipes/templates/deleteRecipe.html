@@ -1,13 +1,23 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
 
-{% block content %}
+<div class="modal fade" id="delete{{recipe.id}}modal" role="dialog" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <form method="POST" action="{% url 'recipes:delete-recipe' recipe.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <center>
+                    <br><p>Permanently Delete {{ recipe.name }}?</p>
+                    <input type='submit' class=" btn btn-primary" value='delete' />
+                    <br><p><a href = "{% url 'recipes:index' %}" style="float: right; margin: 10px;"> nevermind! </a></p>
+                </center>
 
-<form action="" method="POST">
-    {% csrf_token %}
-    Permanently Delete {{ recipe.name }}?
-    <input type='submit' value='Delete' />
-    <br>
-    <a href = "{% url 'recipes:index' %}"> nevermind! </a>
-</form>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
 
-{% endblock %}
+</body>
