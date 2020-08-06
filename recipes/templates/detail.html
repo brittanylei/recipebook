@@ -10,6 +10,7 @@
                 <a href = "{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
             </button>
         </h1>
+
         {% if recipe.get_cover is not None %}
             <img src="{{ recipe.get_cover }}"><br>
         {% endif %}
@@ -18,9 +19,11 @@
         {% for category in recipe.category.all %}
             {{ category.name }} |
         {% endfor %}<br>
+
         {% if recipe.recipe_ref %}
             Reference: {{ recipe.recipe_ref }} <br>
         {% endif %}
+
         Time Needed: {{ recipe.time_needed }} minutes <br>
     </center>
 </div>
@@ -32,6 +35,7 @@
         {{ ingredient }}<br>
       {% endfor %}
   </div>
+
   <div class="column">
       <center><h5><u>Directions</u></h5></center>
       {{ recipe.notes|linebreaks }}

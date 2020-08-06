@@ -11,37 +11,12 @@
 
     <title>My Recipe Book!</title>
 
-    <style>
-        .categorycontainer {
-            border:2px solid #ccc;
-            padding: 5px;
-            width:"100%";
-            height: 100px;
-            overflow-y: scroll;
-        }
-        .ingredientcontainer {
-            border:2px solid #ccc;
-            padding: 5px;
-            width:"100%";
-            height: 365px;
-            overflow-y: scroll;
-        }
-        .column {
-            float: left;
-            width: 44%;
-            margin: 2% 3% 2% 3%;
-            word-wrap: break-word;
-            border-right: double;
-        }
-        .recipe-row {
-            margin-top: 3%;
-            border-style: double;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'recipebook/styles.css' %}">
 </head>
 <body>
 <!-- As a link -->
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-dark bg-dark">
 
     {% if request.user.is_authenticated %}
         <a class="navbar-brand" href="{% url 'recipes:index' %}">{{request.user.username}}'s Recipes</a>

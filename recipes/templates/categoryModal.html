@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-
-<div class="modal fade" id="categorymodal" role="dialog" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <form method="POST" action="">
-          {% csrf_token %}<br>
-          <div class="form-group">
-              <label>{{ cform.name.label }}</label>
-              {{ cform.name }}
+    <body>
+        <div class="modal fade" id="categorymodal" role="dialog" >
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="">
+                  {% csrf_token %}<br>
+                  <div class="form-group">
+                      <label>{{ cform.name.label }}</label>
+                      {{ cform.name }}
+                  </div>
+                  <button name="categoryform" type="submit" class="btn btn-primary">Add Category</button>
+                </form>
+            </div>
           </div>
-          <button name="categoryform" type="submit" class="btn btn-primary">Add Category</button>
-        </form>
-    </div>
-  </div>
-</div>
-
-</body>
+        </div>
+    </body>
 </html>
