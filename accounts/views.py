@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-
-# Create your views here.
 
 
 def login_view(request):
@@ -35,7 +31,6 @@ def register_view(request):
         form = CreateUserForm(request.POST or None)
         if form.is_valid():
             form.save()
-            # messages.info(request, "User registered!")
             return redirect(reverse('accounts:login'))
 
     context = {'form': form}
