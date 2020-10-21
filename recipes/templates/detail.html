@@ -7,21 +7,21 @@
         <h1>
             {{ recipe.name }}
             <button type="button" class="btn btn-primary btn-sm" style="margin-left:10px">
-                <a href = "{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
+                <a href="{% url 'recipes:edit-recipe' recipe.id %}" style="color:#FDFEFE;"> Edit </a>
             </button>
         </h1>
 
         {% if recipe.get_cover is not None %}
-            <img src="{{ recipe.get_cover }}"><br>
+        <img src="{{ recipe.get_cover }}"><br>
         {% endif %}
 
         Categories: |
-        {% for category in recipe.category.all %}
-            {{ category.name }} |
+        {% for category in recipe.categories.all %}
+        {{ category.name }} |
         {% endfor %}<br>
 
         {% if recipe.recipe_ref %}
-            Reference: {{ recipe.recipe_ref }} <br>
+        Reference: {{ recipe.recipe_ref }} <br>
         {% endif %}
 
         Time Needed: {{ recipe.time_needed }} minutes <br>
@@ -29,17 +29,21 @@
 </div>
 
 <div class="row recipe-row">
-  <div class="column">
-      <center><h5><u>Ingredients</u></h5></center>
-      {% for ingredient in recipe.ingredient_set.all %}
+    <div class="column">
+        <center>
+            <h5><u>Ingredients</u></h5>
+        </center>
+        {% for ingredient in recipe.ingredient_set.all %}
         {{ ingredient }}<br>
-      {% endfor %}
-  </div>
+        {% endfor %}
+    </div>
 
-  <div class="column">
-      <center><h5><u>Directions</u></h5></center>
-      {{ recipe.notes|linebreaks }}
-  </div>
+    <div class="column">
+        <center>
+            <h5><u>Directions</u></h5>
+        </center>
+        {{ recipe.notes|linebreaks }}
+    </div>
 </div>
 
 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,11 +25,10 @@ MEDIA_URL = "/media/"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'efw0a$p)t9=t6+@@1-)*)ci_n6wg+je3f0_*b-)ecpfutyv2#i'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blei-recipebook.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['blei-recipebook.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -83,11 +83,16 @@ WSGI_APPLICATION = 'recipebook.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'recipedb',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
